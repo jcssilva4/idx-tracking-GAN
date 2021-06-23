@@ -1,0 +1,11 @@
+# filter parameters
+start_date ='2010-01-12' 
+end_date ='2021-05-07' 
+tol_missing_values = 5 # stock's missing values tolerance
+
+# data cleaning process...
+[2800 rows x 114 columns (113 assets)] # before removing stocks not satisfying missing data tolerance
+[2794 rows x 43 columns (42 assets)] # after removing stocks not satisfying missing data tolerance 
+
+Then before cleaning the data base, we had 113 assets (including IBOV idx), and after that, 42 assets (including IBOV idx). 
+Only 6 rows (6 trading days) were removed from the data base.

@@ -1,0 +1,23 @@
+site da B3: todo o resto!
+
+==== InforMoney ====
+quad1_2010: https://www.infomoney.com.br/mercados/confira-a-composicao-da-nova-carteira-teorica-do-ibovespa/
+quad2_2010 (2previa): https://www.infomoney.com.br/mercados/carteira-teorica-do-ibovespa-contara-com-66-papeis-a-partir-de-maio/
+quad3_2010: https://www.infomoney.com.br/mercados/santander-brasil-brookfield-e-marfrig-passam-a-fazer-parte-do-ibovespa/
+quad1_2011 (3previa): https://www.infomoney.com.br/mercados/bolsa-divulga-terceira-previa-da-carteira-do-ibovespa-incluindo-hypermarcas/
+quad2_2011: https://www.infomoney.com.br/mercados/nova-carteira-do-ibovespa-mantem-69-acoes-do-ultimo-quadrimestre/
+quad3_2011: https://www.infomoney.com.br/mercados/carteira-do-ibovespa-ate-o-final-de-dezembro-inclui-br-malls-e-hering/
+quad3_2013 (3previa): https://www.infomoney.com.br/mercados/3a-previa-do-ibovespa-mantem-kroton-e-anhanguera-peso-da-ogx-mais-que-dobra/
+
+==== Tradernews ====
+(Verifiquei veracidade dos dados deste site a partir das composições quad3_2011 e quad1_2010 obtidos no site da InfoMoney)
+quad1_2012: https://tradernews.wordpress.com/2012/01/09/carteira-teorica-do-ibovespa-janeiro-a-abril2012/
+quad1_2013: https://tradernews.wordpress.com/2013/01/08/carteira-teorica-do-ibovespa-valida-para-o-quadrimestre-jan-a-abr-2013/
+quad2_2015: https://tradernews.wordpress.com/2015/05/
+
+==== Ágora Investimentos ====
+quad1_2015: https://www.agorainvest.com.br/Snapshot/newsbody.aspx?CD_NOTICIA=19679
+quad3_2013: https://www.agorainvest.com.br/Snapshot/newsbody.aspx?CD_NOTICIA=6611
+
+==== Solidus ====
+quad3_2015: http://solidus.com.br/arquivos/Pag%2026%20-%20Carteira%20Ibovespa%20-%20set-dez.pdf

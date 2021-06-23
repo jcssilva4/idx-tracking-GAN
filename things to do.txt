@@ -1,0 +1,26 @@
+1. Gerar repositorio no github
+2. Ver como fazer a GAN funcionar...checar a penalty primeiro...
+
+Checar se isto está correto em GA_main:
+	while f_timeIdx + deltaT <= M_test.shape[0]:
+		Mb = M_test[f_timeIdx:f_timeIdx+1,:,0:b]
+		Mf_real = M_test[f_timeIdx:f_timeIdx+1,:,b:f]
+
+Desenvolver os outros plots...
+
+Executar a rede neural...
+	aumentar epochs
+	antes de executar modificar pasta destino ao invés de test
+
+Executar GA_main...
+	descomentar ga
+	antes de executar modificar pasta destino ao invés de test
+	alterar screenshots_epochs para epochs maiores
+
+Executar GA_results......
+	antes de executar modificar pasta destino ao invés de test
+
+colocar figuras TEST no overleaft
+atualizar figuras da simulação de ações individuais (40 e 100)
+
+transform classes into individual files!

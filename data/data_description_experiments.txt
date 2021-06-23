@@ -1,0 +1,4 @@
+As ações selecionadas para o estudo foram aquelas que já estiveram contidas ao menos uma vez da carteira teórica do índice 
+IBOVESPA e cujos preços históricos estejam contidos no intervalo selecionado. Os dados sobre a composição quadrimestral
+da carteira teórica ao longo do tempo foram obtidos através do motor de busca da B3 e os preços históricos foram obtidos 
+através da biblioteca alpha vantage.
