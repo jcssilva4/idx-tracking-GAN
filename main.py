@@ -12,11 +12,6 @@ from torch.utils.data import Dataset, DataLoader
 from torch.autograd import Variable
 from utils import *
 import torch.autograd as autograd
-# cuda
-cuda = True if torch.cuda.is_available() else False
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-if torch.cuda.is_available():
-  print("======= running with CUDA ========") 
 
 '''
 # pytorch examples #
