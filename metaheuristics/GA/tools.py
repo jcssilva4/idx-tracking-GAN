@@ -79,13 +79,20 @@ def repair_weights(temp_var, nAssets):
 def get_fitness_individuals(R, nAssets, S, obj):
 	fit = []
 	for individual in R:
-		samples_TE = get_samples_TE(individual[:nAssets],S)
-		if obj == "mean":
-			fit.append(np.mean(samples_TE))
-		if obj == "max":
-			fit.append(np.max(samples_TE))
+		if not obj == "hist_TE":
+			# if the objective is to minimize the mean or max TE in GAN simulations
+			samples_TE = get_samples_TE(individual[:nAssets],S)
+			if obj == "mean":
+				fit.append(np.mean(samples_TE))
+			if obj == "max":
+				fit.append(np.max(samples_TE))
+		else:
+			# minimize historical TE
+			fit.append(get_TE(individual[:nAssets],S))
+
 	return fit
 
+'''
 def get_samples_TE(weights, S):
 	samples_TE = [] # TE samples from S
 	for s in S: # loop over all the simulation set S, where s = M_f
@@ -95,6 +102,21 @@ def get_samples_TE(weights, S):
 			TE += (portfolio_ret - s[0,t])**2 # s[0,t] is R_t, for simulation s
 		samples_TE.append(TE/s.shape[1])
 	return samples_TE
+'''
+
+def get_samples_TE(weights, S):
+	samples_TE = [] # TE samples from S
+	for s in S: # loop over all the simulation set S, where s = M_f
+		portfolio_ret = np.matmul(weights, s[1:,:])
+		TE = (portfolio_ret - s[0,:])**2 # s[0,t] is R_t, for simulation s
+		samples_TE.append(np.sum(TE)/s.shape[1])
+	return samples_TE
+
+def get_TE(weights, s):
+	portfolio_ret = np.matmul(s[:,1:], weights)
+	TE = (portfolio_ret - s[:,0])**2 # s[0,t] is R_t, for simulation s
+	return np.sum(TE)/s.shape[1]
+
 
 
 def set_new_pop(F, nIndividuals, cdist = None, lastFrontIdx = None, P = []):

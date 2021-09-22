@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def simpleGA(S, model_pars, nGenerations = 1000):
+def simpleGA(S, model_pars, nGenerations = 500):
 
 	best_TE = []
 	bestsol = []
@@ -20,9 +20,9 @@ def simpleGA(S, model_pars, nGenerations = 1000):
 	obj = model_pars["obj"]
 	
 
-	# set real coded NSGA-II parameters
-	nIndividuals = 10;
-	p_c = 0.9 # crossover probability
+	# set hiperparameters
+	nIndividuals = 40;
+	p_c = 1.0 # crossover probability
 	p_m = 1/nAssets # mutation probability
 
 
@@ -42,7 +42,7 @@ def simpleGA(S, model_pars, nGenerations = 1000):
 		# sort by best individuals
 		F = np.argsort(fit) # sort by ascending order
 		# get final new population P_(t+1) 
-		P = list(F[:nAssets]) # P[0] is the best individual (contains the minimum TE among TE_samples from S)
+		P = list(F[:nIndividuals]) # P[0] is the best individual (contains the minimum TE among TE_samples from S)
 		# get best_sol and best_TE until now
 		best_sol = R[P[0],:] 
 		best_TE = fit[P[0]]
@@ -63,11 +63,7 @@ def simpleGA(S, model_pars, nGenerations = 1000):
 		Q = santanna_mutation(Q, nAssets, nIndividuals, 1, p_m)
 		# R_(t+1) = union(P_(t+1),Q_(t+1))
 		R = np.concatenate((R_new, Q))
-		'''
-		print(" -- -- constraint satisfaction -- --")
-		for ind in range(R.shape[0]):
-			print("K = " + str(sum(R[ind,nAssets:2*nAssets])) + " and sum(w_i) = " + str(sum(R[ind,0:nAssets])) )
-		'''
+
 
 	return best_TE, best_sol
 

@@ -1,26 +1,11 @@
-1. Gerar repositorio no github
-2. Ver como fazer a GAN funcionar...checar a penalty primeiro...
 
-Checar se isto está correto em GA_main:
-	while f_timeIdx + deltaT <= M_test.shape[0]:
-		Mb = M_test[f_timeIdx:f_timeIdx+1,:,0:b]
-		Mf_real = M_test[f_timeIdx:f_timeIdx+1,:,b:f]
+- Tabelas?
 
-Desenvolver os outros plots...
+- Collect more data (until august/2021), forcing the composition to be the same
 
-Executar a rede neural...
-	aumentar epochs
-	antes de executar modificar pasta destino ao invés de test
+- Do more simulations (|S| = 100) when performing the optimization using GAN's synthetic data 
 
-Executar GA_main...
-	descomentar ga
-	antes de executar modificar pasta destino ao invés de test
-	alterar screenshots_epochs para epochs maiores
+- Fazer um GA que agregue tanto dados de simulação quanto dados históricos.
 
-Executar GA_results......
-	antes de executar modificar pasta destino ao invés de test
-
-colocar figuras TEST no overleaft
-atualizar figuras da simulação de ações individuais (40 e 100)
-
-transform classes into individual files!
+min [alpha*TE_hist + (1-alpha) max(TE_simulated)]
+min [alpha*TE_hist + (1-alpha) mean(TE_simulated)]

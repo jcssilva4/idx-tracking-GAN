@@ -1,3 +1,6 @@
-1. Run main.py to train the network and get the models....
+1. Run main_multiple.py to train the network and get the models
+	1.1 Run main_gan_results to obtain simulation samples screenshots and GAN loss
 2. Run GA_main to get and write GA solutions, and get some simulations and loss screenshots
-3. Run GA_results to read GA results and generate plots for them
+	2.1 Run GA_results to read GA results and generate plots for them
+3. Run GA_benchmark_results to get and write the benchmark GA solutions
+        3.1 Run Ga_benchmark_results to read GA benchmark results and generate plots
