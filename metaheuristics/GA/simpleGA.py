@@ -66,8 +66,8 @@ def simpleGA(S, model_pars, nGenerations = 500):
 			# initialize the new population P_(t+1) 
 			P, lastFrontIdx, frank = set_new_pop(F, nIndividuals)  # try to get better performance by not calculating any front when the new population is complete
 			# get cr_metric
-			#cr_metric = get_CR_metric(fit, max_s, min_s)
-			cr_metric = get_CR_metric_old(fit,ref_z, max_s, min_s)
+			cr_metric = get_CR_metric(fit, max_s, min_s)
+			#cr_metric = get_CR_metric_old(fit,ref_z, max_s, min_s)
 			# set the final new population
 			P = set_new_pop(F, nIndividuals, cr_metric, lastFrontIdx, P)
 			# get best sol and best_TE until now

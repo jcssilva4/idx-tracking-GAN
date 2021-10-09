@@ -52,7 +52,7 @@ model_pars["ub"] = expParameters["ub"]
 model_eval_epochs = [2499]
 gen_evals = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 #gen_evals = [10, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 300]
-all_sims = [5,10,20]
+all_sims = [5,10,20,30]
 #all_sims = [5]
 
 # get the dataset
@@ -95,7 +95,7 @@ print("test period: " + str(dates_test[0]) + " - " + str(dates_test[len(dates_te
 
 #print(M_test.shape)
 #print(M_test[60])
-running_experiments = False
+running_experiments = True
 if running_experiments:
 	for run in range(nModels):
 		experimentsDB = dict([])
