@@ -67,7 +67,6 @@ def simpleGA(S, model_pars, nGenerations = 500):
 			P, lastFrontIdx, frank = set_new_pop(F, nIndividuals)  # try to get better performance by not calculating any front when the new population is complete
 			# get cr_metric
 			cr_metric = get_CR_metric(fit, max_s, min_s)
-			#cr_metric = get_CR_metric_old(fit,ref_z, max_s, min_s)
 			# set the final new population
 			P = set_new_pop(F, nIndividuals, cr_metric, lastFrontIdx, P)
 			# get best sol and best_TE until now
@@ -109,7 +108,7 @@ def simpleGA(S, model_pars, nGenerations = 500):
 		# R_(t+1) = union(P_(t+1),Q_(t+1))
 		R = np.concatenate((R_new, Q))
 
-	#'''
+	'''
 	if obj in ["ms_mean"]:
 		print("----")
 		this_tes = get_samples_TE(best_sol[:nAssets],S) 
@@ -119,7 +118,7 @@ def simpleGA(S, model_pars, nGenerations = 500):
 		print("----")
 		#print("max_s_after: " + str(np.array([np.max(fit[:,s]) for s in range(fit.shape[1])])) + ", max_s_before: " + str(max_s))
 		#print("min_s_after: " + str(np.array([np.min(fit[:,s]) for s in range(fit.shape[1])])) + ", min_s_before: " + str(min_s))
-	#'''
+	'''
 
 	if "ms_init_process" in model_pars.keys(): # check if this is running a multi-scenario init 
 		return best_TE, best_sol, R_new
