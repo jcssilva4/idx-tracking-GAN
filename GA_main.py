@@ -89,8 +89,14 @@ print("test period: " + str(dates_test[0]) + " - " + str(dates_test[len(dates_te
 
 #print(M_test.shape)
 #print(M_test[60])
-
 for run in range(nModels):
+	experimentsDB = dict([])
+	experimentsDB["epoch"] = []
+	experimentsDB["f_timeIdx"] = []
+	experimentsDB["n_sims"] = []
+	experimentsDB["obj"] = []
+	experimentsDB["best_objval"] = []
+	experimentsDB["best_sol"] = []
 	epoch = delta_epoch - 1
 	while epoch < total_epochs:
 		# initialize a generator instance from saved checkpoints
@@ -128,7 +134,15 @@ for run in range(nModels):
 				#get GA solutions with obj = "mean"
 				best_TE, best_sol = simpleGA(S = sim_data, model_pars = model_pars, nGenerations = 200)
 				#write GA solutions for this epoch and this f_timeIdx
-				filepath = "results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/sim" + str(n_sims) + "/" + obj + "/epoch_" + str(epoch) + "/f_timeIdx_" + str(f_timeIdx) + "/"
+				experimentsDB["epoch"].append(epoch)
+				experimentsDB["f_timeIdx"].append(f_timeIdx)
+				experimentsDB["n_sims"].append(n_sims)
+				experimentsDB["obj"].append(obj)
+				experimentsDB["best_objval"].append(best_TE)
+				best_sol = str(best_sol.tolist())
+				best_sol = best_sol.replace('[',"").replace("]","")
+				experimentsDB["best_sol"].append(best_sol)
+				'''
 				if not os.path.exists(filepath):
 					os.makedirs(filepath) # create this path if it not exists
 				filehandle = open(filepath + "best_objval.txt", 'w')
@@ -138,8 +152,12 @@ for run in range(nModels):
 				for var_port in best_sol:
 					filehandle.write(str(var_port) + ", ")
 				filehandle.close()
+				'''
 			
 
 			f_timeIdx += deltaT
 
 		epoch += delta_epoch
+	# save the final file
+	df_exp = pd.DataFrame.from_dict(experimentsDB)
+	df_exp.to_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")

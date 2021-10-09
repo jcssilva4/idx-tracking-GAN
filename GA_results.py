@@ -63,6 +63,8 @@ for obj in objs:
 	data_GA["Date"] = []
 	data_GA["Epoch"] = []
 	for run in range(nModels):
+		# open experiments file for this run
+		experimentsDB = pd.read_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
 		for epoch in epoch_GA:
 			f_timeIdx = b
 			cumRet = 1
@@ -71,15 +73,12 @@ for obj in objs:
 			while f_timeIdx < returnDB_test.shape[0]:
 				# check if we need to rebalance
 				if(f_timeIdx == next_rebal): # if rebalance, then get weights... 
-					w = []
-					filepath = main_folder + "run_" + str(run+1) + "/sim" + str(n_sims) + "/" + obj + "/epoch_" + str(epoch-1) + "/f_timeIdx_" + str(f_timeIdx) + "/"
-					filehandle = open(filepath + "best_sol.txt", 'r')
-					next_rebal = next_rebal + f
-					# get weights
-					w =  [raw_w for raw_w in filehandle]
-					w =  [raw_w.replace(" ", "") for raw_w in w[0].split(",")]
+					query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["obj"] == obj) & (experimentsDB["epoch"] == epoch-1) & (experimentsDB["n_sims"] == n_sims)
+					this_row = experimentsDB[query]
+					w =  this_row["best_sol"].values[0]
+					w =  w.split(",")
 					w = [float(raw_w) for raw_w in w[:nAssets-1]]
-					#print("weights: " + str(w))
+					next_rebal = next_rebal + deltaT
 
 				range_oos = min(deltaT, returnDB_test.shape[0] - f_timeIdx)
 				for t in range(range_oos): #loop over each t of the simulation
@@ -121,6 +120,7 @@ data_GA["TE"] = []
 data_GA["Obj"] = []
 data_GA["Epoch"] = []
 for run in range(nModels):
+	experimentsDB = pd.read_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
 	for obj in objs:
 		epoch = 20
 		while epoch <= max_epoch:
@@ -131,15 +131,13 @@ for run in range(nModels):
 			while f_timeIdx + deltaT <= returnDB_test.shape[0]:
 				# check if we need to rebalance
 				if(f_timeIdx == next_rebal): # if rebalance, then get weights... 
-					w = []
-					filepath = main_folder +  "run_" + str(run+1) + "/" + obj + "/epoch_" + str(epoch-1) + "/f_timeIdx_" + str(f_timeIdx) + "/"
-					filehandle = open(filepath + "best_sol.txt", 'r')
-					next_rebal = next_rebal + f
+					next_rebal = next_rebal + deltaT
 					# get weights
-					w =  [raw_w for raw_w in filehandle]
-					w =  [raw_w.replace(" ", "") for raw_w in w[0].split(",")]
+					query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["obj"] == obj) & (experimentsDB["epoch"] == epoch-1) & (experimentsDB["n_sims"] == n_sims)
+					this_row = experimentsDB[query]
+					w =  this_row["best_sol"].values[0]
+					w =  w.split(",")
 					w = [float(raw_w) for raw_w in w[:nAssets-1]]
-					#print("weights: " + str(w))
 
 				for t in range(f): #loop over each t of the simulation
 					data_GA["TE"].append((np.dot(w,returnDB_test[f_timeIdx,1:]) - returnDB_test[t,0])**2)
@@ -172,6 +170,7 @@ sns_plot.figure.clf()
 objs = ["mean", "max"]
 data_oos_period = dict([])
 for run in range(nModels):
+	experimentsDB = pd.read_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
 	for obj in objs:
 		epoch = delta_epoch
 		while epoch <= max_epoch:
@@ -188,15 +187,13 @@ for run in range(nModels):
 					data_oos_period[str(f_timeIdx)] = data_GA
 				# check if we need to rebalance
 				if(f_timeIdx == next_rebal): # if rebalance, then get weights... 
-					w = []
-					filepath = main_folder +  "run_" + str(run+1) + "/sim" + str(n_sims) + "/" + obj +"/epoch_" + str(epoch-1) + "/f_timeIdx_" + str(f_timeIdx) + "/"
-					filehandle = open(filepath + "best_sol.txt", 'r')
-					next_rebal = next_rebal + f
+					next_rebal = next_rebal + deltaT
 					# get weights
-					w =  [raw_w for raw_w in filehandle]
-					w =  [raw_w.replace(" ", "") for raw_w in w[0].split(",")]
+					query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["obj"] == obj) & (experimentsDB["epoch"] == epoch-1) & (experimentsDB["n_sims"] == n_sims)
+					this_row = experimentsDB[query]
+					w =  this_row["best_sol"].values[0]
+					w =  w.split(",")
 					w = [float(raw_w) for raw_w in w[:nAssets-1]]
-					#print("weights: " + str(w))
 
 				data_GA = data_oos_period[str(f_timeIdx)]
 				range_oos = min(deltaT, returnDB_test.shape[0] - f_timeIdx)
@@ -227,6 +224,7 @@ data_GA["TE"] = []
 data_GA["Obj"] = []
 data_GA["Epoch"] = []
 for run in range(nModels):
+	experimentsDB = pd.read_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
 	for obj in objs:
 		epoch = delta_epoch
 		while epoch <= max_epoch:
@@ -237,14 +235,12 @@ for run in range(nModels):
 			while f_timeIdx < returnDB_test.shape[0]:				
 				# check if we need to rebalance
 				if(f_timeIdx == next_rebal): # if rebalance, then get weights... 
-					w = []
-					filepath = main_folder +  "run_" + str(run+1) + "/sim" + str(n_sims) + "/" + obj +"/epoch_" + str(epoch-1) + "/f_timeIdx_" + str(f_timeIdx) + "/"
-					filehandle = open(filepath + "best_sol.txt", 'r')
-					next_rebal = next_rebal + f
-					# get weights
-					w =  [raw_w for raw_w in filehandle]
-					w =  [raw_w.replace(" ", "") for raw_w in w[0].split(",")]
+					query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["obj"] == obj) & (experimentsDB["epoch"] == epoch-1) & (experimentsDB["n_sims"] == n_sims)
+					this_row = experimentsDB[query]
+					w =  this_row["best_sol"].values[0]
+					w =  w.split(",")
 					w = [float(raw_w) for raw_w in w[:nAssets-1]]
+					next_rebal = next_rebal + deltaT
 					#print("weights: " + str(w))
 
 				range_oos = min(deltaT, returnDB_test.shape[0] - f_timeIdx)
@@ -269,9 +265,9 @@ sns_plot.figure.clf()
 
 # plot out-of-sample TE x time for 3 epoch values
 data_oos_period = dict([])
-epochs = [50, 1000, 2500]
 for run in range(nModels):
-	for epoch in epochs:
+	experimentsDB = pd.read_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
+	for epoch in epoch_GA:
 		for obj in objs:
 			if not obj in data_oos_period.keys():
 				data_GA = dict([])
@@ -283,22 +279,20 @@ for run in range(nModels):
 
 			f_timeIdx = b
 			TE = 0
-			next_rebal = f_timeIdx
+			next_rebal = f_timeIdx       
 			w = []
 			while f_timeIdx < returnDB_test.shape[0]:
 				current_f = f_timeIdx
 				# check if we need to rebalance
 				if(f_timeIdx == next_rebal): # if rebalance, then get weights... 
-					w = []
-					filepath = main_folder + "run_" + str(run+1) + "/sim" + str(n_sims) + "/" + obj + "/epoch_" + str(epoch-1) + "/f_timeIdx_" + str(f_timeIdx) + "/"
-
-					filehandle = open(filepath + "best_sol.txt", 'r')
-					next_rebal = next_rebal + f
+					next_rebal = next_rebal + deltaT
 					# get weights
-					w =  [raw_w for raw_w in filehandle]
-					w =  [raw_w.replace(" ", "") for raw_w in w[0].split(",")]
+					query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["obj"] == obj) & (experimentsDB["epoch"] == epoch-1) & (experimentsDB["n_sims"] == n_sims)
+					this_row = experimentsDB[query]
+					w =  this_row["best_sol"].values[0]
+					w =  w.split(",")
 					w = [float(raw_w) for raw_w in w[:nAssets-1]]
-					#print("weights: " + str(w))
+
 				
 				range_oos = min(deltaT, returnDB_test.shape[0] - f_timeIdx)
 				for t in range(range_oos): #loop over each t of the simulation

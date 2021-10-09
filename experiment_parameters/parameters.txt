@@ -1,9 +1,9 @@
 ################ GAN training process ################
 # total_epochs
 2500
-# delta_epoch (save model for each complete cycle of 50 epochs)
-100
-# nModels (number of GAN models to be trained)
+# delta_epoch (save model for each complete cycle of X epochs, this parameter may also be used to plot results associated with GA execuctions)
+500
+# nModels (number of GAN models to be trained and number of GA executions)
 30
 # w (analysis period)
 60
@@ -13,16 +13,16 @@
 # test_size (out-of-sample period size)
 205
 # deltaT (rebalance frequency)
-60
+20
 ################ Metaheuristic - GA that uses GAN data ##################
 # n_sims (number of simulations to be performed by the GAN that the GA will use during the optimization process)
 30
 # objs (objectives used to guide the metaheuristic)
-[mean,max]
+[ms_mean]
 ################ Metaheuristic - GA that uses historical data ##################
 # lookback_windows (how much past historical data (in days) the GA will use during optimization process)
 [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340]
-# nRuns (number of runs per rebalance)
+# nRuns (number of runs per rebalance) 
 30
 ################ Index tracking model parameters ##################
 # K (portfolio size - cardinality)
