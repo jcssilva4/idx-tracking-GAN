@@ -31,7 +31,7 @@ def get_parameters():
 			#print("deltaT: " + str(parameters["deltaT"]))
 
 		# get parameters for the GA with GAN-generated data
-		if "n_sims" in elem:
+		if "n_sims (number of simulations" in elem:
 			parameters["n_sims"] = int(filehandle[index+1])
 			#print("n_sims: " + str(parameters["n_sims"]))
 		if "objectives used" in elem:

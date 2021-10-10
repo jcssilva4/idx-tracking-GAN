@@ -62,6 +62,12 @@ dates_test = dates[returnDB_.shape[0]-test_size + 1:] # +1 to adjust to return d
 print("test period: " + str(dates_test[0]) + " - " + str(dates_test[len(dates_test)-1]))
 obj = "hist_TE"
 for run in range(nRuns):
+	experimentsDB = dict([])
+	experimentsDB["f_timeIdx"] = []
+	experimentsDB["b_size"] = []
+	experimentsDB["obj"] = []
+	experimentsDB["best_objval"] = []
+	experimentsDB["best_sol"] = []
 	print("Execution " + str(run+1))
 	for b_size in lookback_windows:
 		f_timeIdx = b
@@ -79,16 +85,17 @@ for run in range(nRuns):
 			#get GA solutions with obj = "mean"
 			best_TE, best_sol = simpleGA(S = hist_data, model_pars = model_pars, nGenerations = 200)
 			#write GA solutions for this epoch and this f_timeIdx
-			filepath = "results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/" + obj + "/windowsize_" + str(b_size) + "/f_timeIdx_" + str(f_timeIdx) + "/"
-			if not os.path.exists(filepath):
-				os.makedirs(filepath) # create this path if it not exists
-			filehandle = open(filepath + "best_objval.txt", 'w')
-			filehandle.write(str(best_TE))
-			filehandle.close()
-			filehandle = open(filepath + "best_sol.txt", 'w')
-			for var_port in best_sol:
-				filehandle.write(str(var_port) + ", ")
-			filehandle.close()
+			experimentsDB["f_timeIdx"].append(f_timeIdx)
+			experimentsDB["b_size"].append(b_size)
+			experimentsDB["obj"].append(obj)
+			experimentsDB["best_objval"].append(best_TE)
+			best_sol = str(best_sol.tolist())
+			best_sol = best_sol.replace('[',"").replace("]","")
+			experimentsDB["best_sol"].append(best_sol)
 			
 
 			f_timeIdx += deltaT
+
+	# save the final file
+	df_exp = pd.DataFrame.from_dict(experimentsDB)
+	df_exp.to_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/benchmark_experimentsDB.csv")
