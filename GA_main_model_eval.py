@@ -49,11 +49,12 @@ model_pars["K"] = expParameters["K"]
 model_pars["lb"] = expParameters["lb"]
 model_pars["ub"] = expParameters["ub"]
 
-model_eval_epochs = [2499]
+model_eval_epochs = [49, 999]
+#model_eval_epochs = [2499]
 gen_evals = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 #gen_evals = [10, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 300]
-all_sims = [5,10,20,30]
-#all_sims = [5]
+#all_sims = [5,10,20,30]
+all_sims = [30]
 
 # get the dataset
 ibovDB = pd.read_excel("data/IBOV_DB_useThis_extended.xlsx") 
@@ -95,7 +96,7 @@ print("test period: " + str(dates_test[0]) + " - " + str(dates_test[len(dates_te
 
 #print(M_test.shape)
 #print(M_test[60])
-running_experiments = True
+running_experiments = False
 if running_experiments:
 	for run in range(nModels):
 		experimentsDB = dict([])
@@ -156,7 +157,7 @@ if running_experiments:
 		# save the final file
 		df_exp = pd.DataFrame.from_dict(experimentsDB)
 		df_exp.to_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB_modeleval.csv")
-
+		'''
 		experimentsDB = dict([])
 		experimentsDB["f_timeIdx"] = []
 		experimentsDB["b_size"] = []
@@ -194,6 +195,7 @@ if running_experiments:
 		# save the final file
 		df_exp = pd.DataFrame.from_dict(experimentsDB)
 		df_exp.to_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/benchmark_experimentsDB_modeleval.csv")
+		'''
 		
 # plot some figures
 else:
