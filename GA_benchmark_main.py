@@ -83,7 +83,7 @@ for run in range(nRuns):
 			# set problem obj
 			model_pars["obj"] = obj
 			#get GA solutions with obj = "mean"
-			best_TE, best_sol = simpleGA(S = hist_data, model_pars = model_pars, nGenerations = 200)
+			best_TE, best_sol = simpleGA(S = hist_data, model_pars = model_pars, nGenerations = 100)
 			#write GA solutions for this epoch and this f_timeIdx
 			experimentsDB["f_timeIdx"].append(f_timeIdx)
 			experimentsDB["b_size"].append(b_size)

@@ -18,7 +18,11 @@
 # n_sims (number of simulations to be performed by the GAN that the GA will use during the optimization process)
 30
 # objs (objectives used to guide the metaheuristic)
+<<<<<<< HEAD
 [ms_mean,mean]
+=======
+[ms_mean]
+>>>>>>> fc148cb00a8aecf1fa8ac1e3dceac7f73c2e29b5
 ################ Metaheuristic - GA that uses historical data ##################
 # lookback_windows (how much past historical data (in days) the GA will use during optimization process)
 [40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340]

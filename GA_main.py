@@ -132,7 +132,7 @@ for run in range(nModels):
 				# set problem obj
 				model_pars["obj"] = obj # "mean" or "max"
 				#get GA solutions with obj = "mean"
-				best_TE, best_sol = simpleGA(S = sim_data, model_pars = model_pars, nGenerations = 200)
+				best_TE, best_sol = simpleGA(S = sim_data, model_pars = model_pars, nGenerations = 100)
 				#write GA solutions for this epoch and this f_timeIdx
 				experimentsDB["epoch"].append(epoch)
 				experimentsDB["f_timeIdx"].append(f_timeIdx)
