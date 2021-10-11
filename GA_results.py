@@ -30,7 +30,7 @@ model_pars["ub"] = expParameters["ub"]
 # set ga with gan parameters
 objs =  expParameters["objs"]
 n_sims = expParameters["n_sims"]
-epoch_GA = [50, 1000, 2500]
+epoch_GA = [100, 1000, 2500]
 
 # get the dataset
 ibovDB = pd.read_excel("data/IBOV_DB_useThis_extended.xlsx") 

@@ -159,5 +159,7 @@ for run in range(nModels):
 
 		epoch += delta_epoch
 	# save the final file
+	if not os.path.exists("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/"):
+		os.makedirs(filepath) # create this path if it not exists
 	df_exp = pd.DataFrame.from_dict(experimentsDB)
 	df_exp.to_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
