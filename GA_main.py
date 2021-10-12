@@ -89,7 +89,7 @@ print("test period: " + str(dates_test[0]) + " - " + str(dates_test[len(dates_te
 
 #print(M_test.shape)
 #print(M_test[60])
-for run in range(nModels):
+for run in range(1,nModels):
 	experimentsDB = dict([])
 	experimentsDB["epoch"] = []
 	experimentsDB["f_timeIdx"] = []
@@ -160,6 +160,6 @@ for run in range(nModels):
 		epoch += delta_epoch
 	# save the final file
 	if not os.path.exists("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/"):
-		os.makedirs(filepath) # create this path if it not exists
+		os.makedirs("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/") # create this path if it not exists
 	df_exp = pd.DataFrame.from_dict(experimentsDB)
 	df_exp.to_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
