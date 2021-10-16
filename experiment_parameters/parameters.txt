@@ -4,7 +4,7 @@
 # delta_epoch (save model for each complete cycle of X epochs, this parameter may also be used to plot results associated with GA execuctions)
 100
 # nModels (number of GAN models to be trained and number of GA executions)
-4
+19
 # w (analysis period)
 60
 # b (condition period) 

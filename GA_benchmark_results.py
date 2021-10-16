@@ -20,7 +20,7 @@ w = expParameters["w"]
 b = expParameters["b"]
 f = w - b
 nModels = expParameters["nModels"]
-total_epochs =  expParameters["total_epochs"]
+total_epochs = 2300 #expParameters["total_epochs"]
 # set portfolio problem
 model_pars = dict([])
 model_pars["K"] = expParameters["K"]
@@ -56,7 +56,7 @@ sns.set(rc={'figure.figsize':(9.7,6.27)})
 main_folder = "results/GA_test/deltaT_" + str(deltaT) + "/"
 # plot out-of-sample tracking error x time (multiple epochs)
 epoch = total_epochs
-objs = ["mean", "max", "hist_TE"]
+objs = ["mean", "ms_mean", "hist_TE"]
 data_GA = dict([])
 data_GA["Cumulative Return"] = []
 data_GA["Date"] = []
@@ -71,7 +71,7 @@ for obj in objs:
 				next_rebal = f_timeIdx
 				w = []
 				filepath = main_folder + "run_" + str(run+1) + "/experimentsDB.csv"
-				if not obj in ["mean", "max"]:
+				if not obj in ["mean", "ms_mean"]:
 					filepath = main_folder + "run_" + str(run+1) + "/benchmark_experimentsDB.csv"
 
 				experimentsDB = pd.read_csv(filepath) 
@@ -83,7 +83,7 @@ for obj in objs:
 					# check if we need to rebalance
 					if(f_timeIdx == next_rebal): # if rebalance, then get weights... 
 						w = []
-						if not obj in ["mean", "max"]:
+						if not obj in ["mean", "ms_mean"]:
 							query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["b_size"] == b_size) 
 						else:
 							query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["obj"] == obj) & (experimentsDB["epoch"] == epoch-1) & (experimentsDB["n_sims"] == n_sims)
@@ -127,7 +127,7 @@ sns_plot.figure.savefig(main_folder + "sim" + str(n_sims) + "/"  + "benchmark_Cu
 sns_plot.figure.clf()
 
 # plot TE x f_timeIdx for each combination of GA + simulated/real data model
-objs = ["mean", "max"]
+objs = ["mean", "ms_mean"]
 objs.extend([str(b_size) for b_size in best_lookback_windows])
 data_GA = dict([])
 data_GA["TE"] = []
@@ -137,7 +137,7 @@ for run in range(nModels):
 	for obj in objs:
 		b_size = 0
 		filepath = main_folder + "run_" + str(run+1) + "/experimentsDB.csv"
-		if not obj in ["mean", "max"]:
+		if not obj in ["mean", "ms_mean"]:
 			filepath = main_folder + "run_" + str(run+1) + "/benchmark_experimentsDB.csv"
 			b_size = int(obj)
 
@@ -152,7 +152,7 @@ for run in range(nModels):
 			if(f_timeIdx == next_rebal): # if rebalance, then get weights... 
 				w = []
 				query = []
-				if not obj in ["mean", "max"]:
+				if not obj in ["mean", "ms_mean"]:
 					query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["b_size"] == b_size) 
 				else:
 					query = (experimentsDB["f_timeIdx"] == f_timeIdx) & (experimentsDB["obj"] == obj) & (experimentsDB["epoch"] == epoch-1) & (experimentsDB["n_sims"] == n_sims)
@@ -168,7 +168,7 @@ for run in range(nModels):
 			for t in range(range_oos): #loop over each t of the simulation
 				data_GA["TE"].append((np.dot(w,returnDB_test[f_timeIdx,1:]) - returnDB_test[f_timeIdx,0])**2)
 				data_GA["rebalance date"].append(dates_test[current_f_])
-				if not obj in ["mean", "max"]:
+				if not obj in ["mean", "ms_mean"]:
 					model = "GA - " + str(b_size)
 				else:
 					model = "GAN - " + obj
