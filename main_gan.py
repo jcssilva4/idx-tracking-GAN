@@ -12,6 +12,7 @@ from torch.utils.data import Dataset, DataLoader
 from torch.autograd import Variable
 from utils import *
 import torch.autograd as autograd
+from experiment_parameters.parameters import *
 
 import os
 
@@ -31,10 +32,10 @@ https://discuss.pytorch.org/t/check-the-norm-of-gradients/27961/2
 ######################################## Main Script ################################################
 
 # Set random seed for reproducibility
-manualSeed = 8899
-random.seed(manualSeed)
-torch.manual_seed(manualSeed)
-np.random.seed(manualSeed) 
+#manualSeed = 8899
+#random.seed(manualSeed)
+#torch.manual_seed(manualSeed)
+#np.random.seed(manualSeed) 
 
 # get experiment parameters
 expParameters = get_parameters()
