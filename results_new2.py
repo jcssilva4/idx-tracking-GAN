@@ -200,7 +200,13 @@ for run in range(nModels):
 	for obj in objs:
 		df_this_gan = df_this_gan_raw[df_this_gan_raw["Obj"] == obj]
 		df_gan_epoch = df_this_gan.groupby(['Epoch']).mean()
-		df_gan_final = df_gan_epoch[df_gan_epoch["TE"] <= mean_ga_hist]
+		#print("before sorting")
+		#print(df_gan_epoch)
+		#print("after sorting")
+		df_gan_sorted = df_gan_epoch.sort_values('TE')
+		#print(df_gan_sorted.head(1))
+		#df_gan_final = df_gan_epoch[df_gan_epoch["TE"] <= mean_ga_hist]
+		df_gan_final = df_gan_sorted.head(1)
 		#print(df_gan_final)
 		block_len = len(df_gan_final.index.values)
 		df_avg_best["TE"].extend(df_gan_final["TE"].values)
@@ -218,7 +224,7 @@ df = pd.DataFrame(df_avg_best)
 df_after_plot = df.copy() # we need to plot this in the end of the code, because FacetGrid cause problems for some reason...
 sns.set_theme(style="ticks", font_scale=1.4)
 sns_plot = sns.histplot(data=df, x="Epoch", hue = "Algorithm")
-sns_plot.figure.savefig(main_folder + "sim" + str(n_sims) + "/new_results/epoch_hist" + str(deltaT) + ".png")
+sns_plot.figure.savefig(main_folder + "sim" + str(n_sims) + "/new_results2/epoch_hist" + str(deltaT) + ".png")
 sns_plot.figure.clf()
 
 
@@ -230,7 +236,7 @@ for obj in objs:
 	df_obj = df[df['Algorithm'] == metaheuristics[obj]]
 	df_obj_sorted = df_obj.sort_values('TE')
 	print(df_obj_sorted)
-	frames.append(df_obj_sorted.head(30))
+	frames.append(df_obj_sorted)
 	if obj == "ms_mean":
 		best_model = df_obj_sorted.head(1)
 df_selected_models = pd.concat(frames)
@@ -351,7 +357,7 @@ fig, axs = plt.subplots(ncols = 2)
 sns.lineplot(x="rebalance date", y="TE", hue="Algorithm", data = df_1, ax = axs[0])
 sns.lineplot(x = 'Date', y = 'Cumulative Return', hue="Algorithm", data = df_2, ax = axs[1])
 fig.set_size_inches(27, 9)
-fig.savefig(main_folder + "sim" + str(n_sims) + "/new_results/benchmark_oosTE_CumRet_Date" + str(deltaT) + ".png")
+fig.savefig(main_folder + "sim" + str(n_sims) + "/new_results2/benchmark_oosTE_CumRet_Date" + str(deltaT) + ".png")
 
 
 '''
@@ -507,7 +513,7 @@ for rebl_prd_type in ['best','worst']:
 	for axes in g.axes.flat:
 		_ = axes.set_xticklabels(axes.get_xticklabels(), rotation=45)
 	g.tight_layout()
-	g.savefig(main_folder + "sim" + str(n_sims) + "/new_results/sims_" + rebl_prd_type + str(deltaT) + ".png")
+	g.savefig(main_folder + "sim" + str(n_sims) + "/new_results2/sims_" + rebl_prd_type + str(deltaT) + ".png")
 	plt.close()
 
 ''''
@@ -537,5 +543,5 @@ sns.set(rc={'figure.figsize':(25,16)})
 sns.set_theme(style="ticks", font_scale=1.0)
 g = sns.FacetGrid(data = df_after_plot, col="Algorithm")
 g.map(sns.histplot,"Epoch","TE")
-g.savefig(main_folder + "sim" + str(n_sims) + "/new_results/epoch_TE_hist" + str(deltaT) + ".png")
+g.savefig(main_folder + "sim" + str(n_sims) + "/new_results2/epoch_TE_hist" + str(deltaT) + ".png")
 

@@ -1,10 +1,10 @@
 ################ GAN training process ################
 # total_epochs
-2500
+8000
 # delta_epoch (save model for each complete cycle of X epochs, this parameter may also be used to plot results associated with GA execuctions)
-100
+400
 # nModels (number of GAN models to be trained and number of GA executions)
-19
+30
 # w (analysis period)
 60
 # b (condition period) 
@@ -13,7 +13,7 @@
 # test_size (out-of-sample period size)
 205
 # deltaT (rebalance frequency)
-20
+40
 ################ Metaheuristic - GA that uses GAN data ##################
 # n_sims (number of simulations to be performed by the GAN that the GA will use during the optimization process)
 30

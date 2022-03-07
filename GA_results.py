@@ -30,7 +30,7 @@ model_pars["ub"] = expParameters["ub"]
 # set ga with gan parameters
 objs =  expParameters["objs"]
 n_sims = expParameters["n_sims"]
-epoch_GA = [100, 1000, 2500] # for mean_ms -> best_epoch = 2300, for mean -> best_epoch = 
+epoch_GA = [400, 800, 8000] # for mean_ms -> best_epoch = 2300, for mean -> best_epoch = 
 
 # get the dataset
 ibovDB = pd.read_excel("data/IBOV_DB_useThis_extended.xlsx") 
@@ -52,6 +52,10 @@ returnDB_test = returnDB_[returnDB_.shape[0]-test_size:,:]
 dates_test = dates[returnDB_.shape[0]-test_size + 1:] # +1 to adjust to return data
 
 sns.set(rc={'figure.figsize':(9.7,6.27)})
+
+metaheuristics = dict([])
+metaheuristics['ms_mean'] = 'SDM-SBGA' 
+metaheuristics['mean'] = 'SDM-SAAGA' 
 
 max_epoch = total_epochs
 epoch_step_size = delta_epoch
@@ -223,6 +227,7 @@ data_GA = dict([])
 data_GA["TE"] = []
 data_GA["Obj"] = []
 data_GA["Epoch"] = []
+data_GA["Algorithm"] = []
 for run in range(nModels):
 	experimentsDB = pd.read_csv("results/GA_test/deltaT_" + str(deltaT) + "/run_" + str(run+1) + "/experimentsDB.csv")
 	for obj in objs:
@@ -248,6 +253,7 @@ for run in range(nModels):
 					data_GA["TE"].append((np.dot(w,returnDB_test[f_timeIdx,1:]) - returnDB_test[f_timeIdx,0])**2)
 					data_GA["Obj"].append(obj)
 					data_GA["Epoch"].append(epoch)
+					data_GA["Algorithm"].append(metaheuristics[obj])
 					f_timeIdx += 1
 
 			epoch += epoch_step_size
@@ -255,7 +261,7 @@ for run in range(nModels):
 # consolidated for all periods
 df = pd.DataFrame(data_GA)
 sns.set_theme(style="ticks", font_scale=1.4)
-sns_plot = sns.lineplot(data=df, x="Epoch", y="TE", hue="Obj")#, palette="inferno")
+sns_plot = sns.lineplot(data=df, x="Epoch", y="TE", hue="Algorithm")#, palette="inferno")
 sns_plot.figure.autofmt_xdate()
 sns_plot.figure.savefig(main_folder  + "sim" + str(n_sims) + "/compareObj_TE_epoch.png")
 sns_plot.figure.clf()
