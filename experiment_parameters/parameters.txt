@@ -13,7 +13,7 @@
 # test_size (out-of-sample period size)
 205
 # deltaT (rebalance frequency)
-40
+10
 ################ Metaheuristic - GA that uses GAN data ##################
 # n_sims (number of simulations to be performed by the GAN that the GA will use during the optimization process)
 30

@@ -54,7 +54,7 @@ dates_test = dates[returnDB_.shape[0]-test_size + 1:] # +1 to adjust to return d
 sns.set(rc={'figure.figsize':(9.7,6.27)})
 
 metaheuristics = dict([])
-metaheuristics['ms_mean'] = 'SDM-SBGA' 
+metaheuristics['ms_mean'] = 'SDM-SDBGA' 
 metaheuristics['mean'] = 'SDM-SAAGA' 
 
 max_epoch = total_epochs

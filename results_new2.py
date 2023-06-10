@@ -14,8 +14,8 @@ import torch.autograd as autograd
 from utils import *
 
 metaheuristics = dict([])
-metaheuristics['ms_mean'] = 'SDM-SBGA' 
-metaheuristics['mean'] = 'SDM-SAAGA' 
+metaheuristics['ms_mean'] = 'SDM-SBDGA-GAN' 
+metaheuristics['mean'] = 'SDM-SAAGA-GAN' 
 
 # get experiment parameters
 expParameters = get_parameters()
@@ -145,6 +145,15 @@ data_GA_grouped2 = df_raw.groupby(['Model']).std()
 data_GA_grouped["std(TE)"] = data_GA_grouped2["TE"]
 #print(data_GA_grouped)
 
+# prepare rdga boxlot data
+boxplot_raw = df_rdga.copy()
+boxplot_rdga_final = boxplot_raw.groupby(['run']).mean()
+boxplot_rdga_final["Epoch"] = [1]*30
+boxplot_rdga_final["Algorithm"] = ["RDM-GA"]*30
+boxplot_rdga_final["Objective"] = ["real"]*30
+boxplot_rdga_final["Model"] = [1]*30
+#print(boxplot_rdga_final)
+
 # get the mean OoS tracking error of the chosen GA 
 mean_ga_hist = data_GA_grouped[data_GA_grouped.index == 'GA - 40'].TE.values[0]
 print("RDM-GA performance: \n" + str(data_GA_grouped[data_GA_grouped.index == 'GA - 40']))
@@ -246,6 +255,14 @@ frames_grouped = df_selected_models.groupby(['Algorithm']).mean()
 frames_grouped2= df_selected_models.groupby(['Algorithm']).std()
 frames_grouped['std(TE)'] = frames_grouped2['TE']
 print(frames_grouped)
+
+#print("df_boxplot_data")
+df_boxplot_data = pd.concat([df_selected_models,boxplot_rdga_final])
+#print(df_boxplot_data)
+#boxplot for oosTE
+sns_plot = sns.boxplot(x="Algorithm", y="TE", data=df_boxplot_data)#, palette="Set3")
+sns_plot.figure.savefig(main_folder + "sim" + str(n_sims) + "/new_results2/benchmark_oosTE_boxplot" + str(deltaT) + ".png")
+sns_plot.figure.clf()
 
 
 
@@ -358,6 +375,7 @@ sns.lineplot(x="rebalance date", y="TE", hue="Algorithm", data = df_1, ax = axs[
 sns.lineplot(x = 'Date', y = 'Cumulative Return', hue="Algorithm", data = df_2, ax = axs[1])
 fig.set_size_inches(27, 9)
 fig.savefig(main_folder + "sim" + str(n_sims) + "/new_results2/benchmark_oosTE_CumRet_Date" + str(deltaT) + ".png")
+
 
 
 '''
