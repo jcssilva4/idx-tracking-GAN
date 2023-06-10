@@ -8,6 +8,7 @@ import numpy as np
 import seaborn as sns
 # GA
 from metaheuristics.GA.simpleGA import simpleGA 
+from metaheuristics.others.get_portfolio import *
 from utils import *
 from experiment_parameters.parameters import *
 
@@ -39,6 +40,7 @@ objs =  expParameters["objs"]
 # GA parameters
 nRuns = expParameters["nRuns"]
 lookback_windows = expParameters["lookback_windows"]
+lookback_windows = [40]
 
 # get the dataset
 ibovDB = pd.read_excel("data/IBOV_DB_useThis_extended.xlsx") 
@@ -81,6 +83,7 @@ for model in models:
 				while f_timeIdx < test_size:
 					# get returns for this window (Mb)
 					#hist_data = returnDB_test[f_timeIdx,1:]
+					#print("f_timeIdx: " + str(f_timeIdx))
 					start_time_idx = returnDB_.shape[0] - test_size + f_timeIdx - b_size 
 					end_time_idx = returnDB_.shape[0] - test_size + f_timeIdx
 					hist_data = returnDB_[start_time_idx : end_time_idx, :]
@@ -91,13 +94,14 @@ for model in models:
 					model_pars["obj"] = obj
 					#get GA solutions with obj = "mean"
 					#best_TE, best_sol = simpleGA(S = hist_data, model_pars = model_pars, nGenerations = 100)
-					tr1, best_TE, tr2, tr3, best_sol = get_solution_approx(model, this_algorithm, hist_data[:,1:], hist_data[:,0], 10, hist_data.shape[0], 1, 0)
+					tr1, best_TE, tr2, tr3, best_sol = get_solution_approx(model, this_algorithm, hist_data.T, 10, hist_data.shape[0], 1, 0)
 					#write GA solutions for this epoch and this f_timeIdx
 					experimentsDB["f_timeIdx"].append(f_timeIdx)
 					experimentsDB["b_size"].append(b_size)
 					experimentsDB["obj"].append(obj)
 					experimentsDB["best_objval"].append(best_TE)
-					best_sol = str(best_sol.tolist())
+					#best_sol = str(best_sol.tolist())
+					best_sol = str(best_sol)
 					best_sol = best_sol.replace('[',"").replace("]","")
 					experimentsDB["best_sol"].append(best_sol)
 

@@ -1,4 +1,4 @@
-import metaheuristics.GA_santanna.population as populationn
+import metaheuristics.others.GA_santanna.population as populationn
 import random as rand
 import time
 
@@ -21,7 +21,7 @@ def GA_santanna(model, r, k, T, num_executions, target_sol):
 
     for run in range(num_executions): 
 
-        print("execution = " + str(run+1) + " - GA_santanna")
+        #print("execution = " + str(run+1) + " - GA_santanna")
 
         pop.gen_pop()
         population=pop.population.copy()    ##

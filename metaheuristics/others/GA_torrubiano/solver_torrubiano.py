@@ -6,7 +6,7 @@ class Solve:
     def __init__(self,T,r):
         self.lenght,self.t,self.ub,self.lb=r.shape[0],0,1,0.001  
         self.insample = T
-        self.outsample = 290 - T #assets counter, it includes the index
+        #self.outsample = 290 - T #assets counter, it includes the index
         self.var(r)
             
    
@@ -36,7 +36,7 @@ class Solve:
     def opt(self):
         print("Starting optimization.")
         c=cp.Cplex()
-        time=[i for i in range(self.insample,self.insample+self.outsample)]
+        #time=[i for i in range(self.insample,self.insample+self.outsample)]
         gg=[(i,-self.G[i])for i in range(self.lenght-1)]
         square=[(i,j,self.H[i][j]) for i,j in it.product(range(self.lenght-1),range(self.lenght-1))]
         var=["w"+ str(i) for i in range(self.lenght-1)]       #in this model, we only have the given w by the population
@@ -74,7 +74,7 @@ class Solve:
         returns,h,g=self.adjust(parent1)
         #h=h.tolist()
         c=cp.Cplex()
-        time=[i for i in range(self.insample,self.insample+self.outsample)]
+        #time=[i for i in range(self.insample,self.insample+self.outsample)]
         gg=[(i,-g[i])for i in range(len(returns))]
         square=[(i,j,h[i][j]) for i,j in it.product(range(len(returns)),range(len(returns)))]
         var=["w"+ str(i) for i in range(len(returns))]
@@ -116,7 +116,7 @@ class Solve:
         for i in parent:
             if i==1:
                 control+=1
-        returns=np.zeros([control,self.insample+self.outsample])
+        returns=np.zeros([control,self.insample])
         H=np.zeros([control,control])
         G=np.zeros([control])
         #adjusts the r matrix

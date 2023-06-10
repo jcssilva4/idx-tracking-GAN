@@ -5,10 +5,10 @@ class Population:
     def __init__(self,model,popsize,card,num_mutation,r,T):
 
         if model == "ruiz-torrubiano2009_relaxed":
-            import metaheuristics.GA_torrubiano.solver_torrubiano as solver
+            import metaheuristics.others.GA_torrubiano.solver_torrubiano as solver
 
         elif model == "wang2012_relaxed":
-            import metaheuristics.GA_torrubiano.solver_wang as solver
+            import metaheuristics.others.GA_torrubiano.solver_wang as solver
 
         self.num_mutation=num_mutation
         self.popsize=popsize

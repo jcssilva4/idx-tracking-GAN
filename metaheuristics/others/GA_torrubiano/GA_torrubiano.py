@@ -1,4 +1,4 @@
-import metaheuristics.GA_torrubiano.population as populationn
+import metaheuristics.others.GA_torrubiano.population as populationn
 import random as rand
 import time
 
@@ -22,7 +22,7 @@ def GA_torrubiano(model, r, k, T, num_executions, target_sol):
 
 	for run in range(num_executions): 
 
-		print("execution = " + str(run+1) + " - GA_torrubiano")
+		#print("execution = " + str(run+1) + " - GA_torrubiano")
 
 		pop.gen_pop()
 		population=pop.population.copy()    ##
